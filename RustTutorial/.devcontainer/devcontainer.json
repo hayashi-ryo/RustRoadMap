@@ -32,7 +32,10 @@
         "tamasfe.even-better-toml",
         "Swellaby.vscode-rust-test-adapter",
         "JScearcy.rust-doc-viewer",
-        "rust-lang.rust-analyzer"
+        "rust-lang.rust-analyzer",
+				"davidanson.vscode-markdownlint",
+				"shd101wyy.markdown-preview-enhanced",
+				"yzhang.markdown-all-in-one"
 			]
 		}
 	}
