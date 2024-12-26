@@ -73,3 +73,40 @@ let six = IPAddrKind::V6;
 基本的に構造体でも同じことはできるけど、列挙したものそれぞれに対して同じメソッドを定義したい場合は、enumの方がはるかに便利そう。
 
 match型はどうやって使うのだろうと思っていたが、enumと組み合わせると便利なのか。
+
+### 肥大化するパッケージ管理
+
+crate root: Rustコンパイラの基準点として、クレートのルートモジュールを作るソースファイルのこと。cargo new my_projectで新規プロジェクトを開始した場合は、src/main.rsがクレートルートであるという慣習にしたがっている。ここにlib.rsをおけばライブラリクレートだと判断する。
+このようにcargoはクレートルートファイルをrustcに渡して、ライブラリやバイナリをビルドする。
+
+モジュール: クレート内のコードをグループ化して、可読性と再利用性を上げることができる。
+`src/main.rs`や`src/lib.rs`をクレートルートと呼ぶことを説明されたが、これはモジュール構造のルートにこの二つのファイルがcrateというモジュールを形成するため。以下にサンプルコードとそのモジュールツリーを表示する。
+
+```Rust
+mod front_of_house {
+    mod hosting {
+        fn add_to_waitlist() {}
+        fn seat_at_table() {}
+    }
+
+    mod serving {
+        fn take_order() {}
+        fn serve_order() {}
+        fn take_payment() {}
+    }
+}
+```
+
+```module tree
+crate
+ └── front_of_house
+     ├── hosting
+     │   ├── add_to_waitlist
+     │   └── seat_at_table
+     └── serving
+         ├── take_order
+         ├── serve_order
+         └── take_payment
+```
+
+この例はlib.rsを例に挙げたが、main.rsの場合も、その内部で関数やstructなどツリー構造を形成する個別の要素が存在する。
